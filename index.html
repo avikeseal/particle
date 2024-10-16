@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Sphere</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Basic three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add lighting for 3D effect
+        const ambientLight = new THREE.AmbientLight(0x404040); // Soft ambient light
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 1, 100); // Strong point light
+        pointLight.position.set(5, 5, 5); // Position light to shine on the sphere
+        scene.add(pointLight);
+
+        // Create a 3D geometric sphere
+        const geometry = new THREE.SphereGeometry(0.5, 32, 32); // Small sphere
+        const material = new THREE.MeshStandardMaterial({ color: 0xff0000 }); // Red color
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Set camera position to view the sphere
+        camera.position.z = 5;
+
+        // Render loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate the sphere for a little movement
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>
