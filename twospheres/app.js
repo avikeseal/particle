@@ -28,3 +28,27 @@ scene.add(sphere2);
 // set camera position to view both spheres:
 camera.position.z = 5;
 
+// render loop
+function animate() {
+    requestAnimationFrame(animate);
+
+    //rotate both spheres:
+    sphere1.rotation.x += 0.01;
+    sphere1.rotation.y += 0.01;
+
+    sphere2.rotation.x += 0.01;
+    sphere2.rotation.y += 0.01;
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+// Handle window resize:
+window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
